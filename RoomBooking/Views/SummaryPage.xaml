@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoomBooking.Views.SummaryPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#2563EB"
+              HeightRequest="80"
+              Padding="0"
+              Margin="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Text="←"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="White"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    Margin="0,0,0,7"
+                    Clicked="OnBackClicked"/>
+
+            <Label Grid.Column="1"
+                   Text="สรุปข้อมูลห้อง"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <BoxView Grid.Column="2" Color="#2563EB"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="0">
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="ห้อง" FontSize="14" TextColor="Gray"/>
+                    <Label Grid.Column="1" x:Name="lblRoomName" FontSize="14" FontAttributes="Bold" HorizontalOptions="End"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="จำนวนความจุ" FontSize="14" TextColor="Gray"/>
+                    <Label Grid.Column="1" x:Name="lblCapacity" FontSize="14" FontAttributes="Bold" HorizontalOptions="End"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="ราคาต่อชั่วโมง" FontSize="14" TextColor="Gray"/>
+                    <Label Grid.Column="1" x:Name="lblPrice" FontSize="14" FontAttributes="Bold" TextColor="#2563EB" HorizontalOptions="End"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="อุปกรณ์ในห้อง" FontSize="14" TextColor="Gray" VerticalOptions="Start"/>
+                    <Label Grid.Column="1" x:Name="lblEquipment" FontSize="14" FontAttributes="Bold"
+                           HorizontalOptions="End" HorizontalTextAlignment="End" LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="ค่าประกันอุปกรณ์" FontSize="14" TextColor="Gray"/>
+                    <Label Grid.Column="1" x:Name="lblInsurance" FontSize="14" FontAttributes="Bold" HorizontalOptions="End"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+                <Grid ColumnDefinitions="*,*" Padding="0,14">
+                    <Label Text="สถานะการใช้งาน" FontSize="14" TextColor="Gray"/>
+                    <Label Grid.Column="1" x:Name="lblAvailable" FontSize="14" FontAttributes="Bold" HorizontalOptions="End"/>
+                </Grid>
+
+                <BoxView HeightRequest="0.5" Color="#E0E0E0" Margin="0,10,0,0"/>
+                <Grid ColumnDefinitions="*,*" Padding="10,20" BackgroundColor="#F9FAFB">
+                    <Label Text="ยอดรวม (รวมค่าประกัน)" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" x:Name="lblTotalResult" FontSize="22" FontAttributes="Bold" TextColor="#111" HorizontalOptions="End"/>
+                </Grid>
+                <BoxView HeightRequest="0.5" Color="#E0E0E0"/>
+
+                <Button Text="บันทึกข้อมูล"
+                        BackgroundColor="#2563EB" TextColor="White"
+                        FontSize="16" FontAttributes="Bold" CornerRadius="10"
+                        HeightRequest="55" Margin="0,30,0,20"
+                        Clicked="btnSave_Clicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

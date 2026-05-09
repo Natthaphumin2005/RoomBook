@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoomBooking.Views.RegisterPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F3F4F6">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Text="←" BackgroundColor="Transparent"
+                    BorderColor="Transparent" TextColor="White" FontSize="30"
+                    FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"
+                    WidthRequest="60" HeightRequest="60" Margin="0,0,0,7"
+                    Clicked="OnLoginTapped"/>
+
+            <Label Grid.Column="1" Text="สมัครสมาชิก" FontSize="20" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- FORM -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,24" Spacing="0">
+
+                <Label Text="ชื่อ-นามสกุล" FontSize="14" FontAttributes="Bold"
+                       TextColor="#111827" Margin="0,0,0,6"/>
+                <Frame CornerRadius="10" Padding="12,0" BorderColor="#E5E7EB"
+                       HasShadow="False" BackgroundColor="White" HeightRequest="54" Margin="0,0,0,16">
+                    <Entry x:Name="entryName" Placeholder="กรอกชื่อ-นามสกุล"
+                           PlaceholderColor="#9CA3AF" FontSize="15" TextColor="#111827"
+                           BackgroundColor="Transparent" VerticalOptions="Center"/>
+                </Frame>
+
+                <Label Text="อีเมล" FontSize="14" FontAttributes="Bold"
+                       TextColor="#111827" Margin="0,0,0,6"/>
+                <Frame CornerRadius="10" Padding="12,0" BorderColor="#E5E7EB"
+                       HasShadow="False" BackgroundColor="White" HeightRequest="54" Margin="0,0,0,16">
+                    <Entry x:Name="entryEmail" Placeholder="กรอกอีเมล"
+                           PlaceholderColor="#9CA3AF" FontSize="15" Keyboard="Email"
+                           TextColor="#111827" BackgroundColor="Transparent" VerticalOptions="Center"/>
+                </Frame>
+
+                <Label Text="เบอร์โทร" FontSize="14" FontAttributes="Bold"
+                       TextColor="#111827" Margin="0,0,0,6"/>
+                <Frame CornerRadius="10" Padding="12,0" BorderColor="#E5E7EB"
+                       HasShadow="False" BackgroundColor="White" HeightRequest="54" Margin="0,0,0,16">
+                    <Entry x:Name="entryPhone" Placeholder="กรอกเบอร์โทรศัพท์"
+                           PlaceholderColor="#9CA3AF" FontSize="15" Keyboard="Telephone"
+                           TextColor="#111827" BackgroundColor="Transparent" VerticalOptions="Center"/>
+                </Frame>
+
+                <Label Text="รหัสผ่าน" FontSize="14" FontAttributes="Bold"
+                       TextColor="#111827" Margin="0,0,0,6"/>
+                <Frame CornerRadius="10" Padding="12,0" BorderColor="#E5E7EB"
+                       HasShadow="False" BackgroundColor="White" HeightRequest="54" Margin="0,0,0,16">
+                    <Entry x:Name="entryPassword" Placeholder="กรอกรหัสผ่าน"
+                           PlaceholderColor="#9CA3AF" FontSize="15" IsPassword="True"
+                           TextColor="#111827" BackgroundColor="Transparent" VerticalOptions="Center"/>
+                </Frame>
+
+                <Label x:Name="lblError" Text="" TextColor="#EF4444" FontSize="13"
+                       IsVisible="False" HorizontalOptions="Center" Margin="0,4,0,0"/>
+
+                <Button Text="สมัครสมาชิก" BackgroundColor="#2563EB" TextColor="White"
+                        FontSize="16" FontAttributes="Bold" CornerRadius="10"
+                        HeightRequest="54" Margin="0,20,0,0"
+                        Clicked="btnRegister_Clicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

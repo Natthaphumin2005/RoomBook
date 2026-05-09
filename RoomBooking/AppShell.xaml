@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RoomBooking.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RoomBooking.Views"
+    Shell.FlyoutBehavior="Disabled">
+
+    <!-- หน้า Login-->
+    <ShellContent x:Name="LoginShell"
+                  Route="LoginPage"
+                  ContentTemplate="{DataTemplate local:LoginPage}"
+                  Shell.NavBarIsVisible="False"/>
+
+    <!--สำหรับ Admin -->
+    <TabBar x:Name="AdminTabBar" IsVisible="False">
+        <Tab Title="หน้าแรก" Icon="home.png">
+            <ShellContent Route="AdminRoomPage" ContentTemplate="{DataTemplate local:AdminRoomPage}" />
+        </Tab>
+        <Tab Title="รายการจอง" Icon="booking.png">
+            <ShellContent Route="AdminBookingPage" ContentTemplate="{DataTemplate local:AdminBookingPage}" />
+        </Tab>
+        <Tab Title="โปรไฟล์" Icon="profile.png">
+            <ShellContent Route="AdminProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
+        </Tab>
+    </TabBar>
+
+    <!-- สำหรับ User -->
+    <TabBar x:Name="UserTabBar" IsVisible="False">
+        <Tab Title="หน้าแรก" Icon="home.png">
+            <ShellContent Route="UserRoomPage" ContentTemplate="{DataTemplate local:UserRoomPage}" />
+        </Tab>
+        <Tab Title="การจองของฉัน" Icon="booking.png">
+            <ShellContent Route="UserBookingPage" ContentTemplate="{DataTemplate local:UserBookingPage}" />
+        </Tab>
+        <Tab Title="โปรไฟล์" Icon="profile.png">
+            <ShellContent Route="UserProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

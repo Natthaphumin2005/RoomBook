@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:RoomBooking.Converters"
+             x:Class="RoomBooking.Views.UserBookingPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F3F4F6">
+
+    <ContentPage.Resources>
+        <conv:Base64ToImageConverter x:Key="Base64ToImage"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Label Text="การจองของฉัน" FontSize="22" FontAttributes="Bold" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <RefreshView Grid.Row="1" x:Name="refreshView" Refreshing="OnRefreshing">
+            <CollectionView x:Name="collBookings">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center"
+                                         Spacing="8" Margin="0,60,0,0">
+                        <Label Text="ยังไม่มีประวัติการจอง" FontSize="15"
+                               TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="15,6" Padding="0" CornerRadius="12"
+                               HasShadow="False" BorderColor="#E5E7EB" BackgroundColor="White"
+                               IsClippedToBounds="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBookingTapped" CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,Auto">
+                                <Grid Grid.Row="0" HeightRequest="140">
+                                    <Image Source="{Binding RoomImagePath, Converter={StaticResource Base64ToImage}}"
+                                           Aspect="AspectFill" HeightRequest="140"/>
+                                    <BoxView BackgroundColor="#40000000"/>
+                                    <Frame CornerRadius="8" Padding="10,4" HorizontalOptions="End"
+                                           VerticalOptions="Start" Margin="10"
+                                           BackgroundColor="{Binding StatusColor}" HasShadow="False">
+                                        <Label Text="{Binding StatusThai}" TextColor="White"
+                                               FontSize="12" FontAttributes="Bold"/>
+                                    </Frame>
+                                    <Label Text="{Binding RoomName}" FontSize="17"
+                                           FontAttributes="Bold" TextColor="White"
+                                           VerticalOptions="End" Margin="12,0,12,10"/>
+                                </Grid>
+                                <VerticalStackLayout Grid.Row="1" Padding="14,12" Spacing="5">
+                                    <Label Text="{Binding BookingDate, StringFormat='วันที่: {0:dd/MM/yyyy}'}"
+                                           TextColor="#4B5563" FontSize="13"/>
+                                    <Label Text="{Binding TimeRange, StringFormat='เวลา: {0}'}"
+                                           TextColor="#4B5563" FontSize="13"/>
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                                        <Label Text="{Binding TotalPrice, StringFormat='฿{0:N0}'}"
+                                               TextColor="#2563EB" FontAttributes="Bold" FontSize="15"/>
+                                        <Label Grid.Column="1" Text="ดูรายละเอียด ›"
+                                               TextColor="#9CA3AF" FontSize="13" VerticalOptions="Center"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+</ContentPage>

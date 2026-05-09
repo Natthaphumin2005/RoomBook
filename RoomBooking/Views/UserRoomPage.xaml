@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:RoomBooking.Converters"
+             x:Class="RoomBooking.Views.UserRoomPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FA">
+
+    <ContentPage.Resources>
+        <conv:Base64ToImageConverter x:Key="Base64ToImage"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Label Text="Room Book" FontSize="22" FontAttributes="Bold" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <!-- Search -->
+                <Frame CornerRadius="10" Padding="12,0" BorderColor="#E5E7EB"
+                       HasShadow="False" BackgroundColor="White" HeightRequest="48">
+                    <Entry x:Name="entrySearch" Placeholder="ค้นหาห้อง"
+                           PlaceholderColor="#9CA3AF" FontSize="15" TextColor="#111827"
+                           TextChanged="OnSearchChanged"/>
+                </Frame>
+
+                <!-- ห้องแนะนำ -->
+                <Label Text="ห้องแนะนำ" FontSize="16" FontAttributes="Bold" TextColor="#111827"/>
+
+                <CollectionView x:Name="cvRecommended" HeightRequest="300" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="12" Padding="0" Margin="0,4,12,4"
+                                   WidthRequest="260" HasShadow="True" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRoomTapped" CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid RowDefinitions="160,*">
+                                    <Grid Grid.Row="0">
+                                        <Image Source="{Binding ImagePath, Converter={StaticResource Base64ToImage}}" Aspect="AspectFill" HeightRequest="160"/>
+                                        <Frame CornerRadius="20" Padding="10,4" HorizontalOptions="End"
+                                               VerticalOptions="Start" Margin="0,8,8,0" HasShadow="False"
+                                               BackgroundColor="{Binding StatusColorHex}">
+                                            <Label Text="{Binding StatusText}" FontSize="12" TextColor="White"/>
+                                        </Frame>
+                                    </Grid>
+                                    <VerticalStackLayout Grid.Row="1" Padding="12,10" Spacing="2">
+                                        <Label Text="{Binding RoomDisplayName}" FontSize="15"
+                                               FontAttributes="Bold" TextColor="#111827"/>
+                                        <Label Text="{Binding CapacityText}" FontSize="13" TextColor="#6B7280"/>
+                                        <Label Text="{Binding PriceDisplayText}" FontSize="14"
+                                               FontAttributes="Bold" TextColor="#2563EB" Margin="0,4,0,0"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- ห้องทั้งหมด -->
+                <Label Text="ห้องทั้งหมด" FontSize="16" FontAttributes="Bold" TextColor="#111827"/>
+
+                <CollectionView x:Name="cvAllRooms" HeightRequest="300" ItemsLayout="HorizontalList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="12" Padding="0" Margin="0,4,12,4"
+                                   WidthRequest="260" HasShadow="True" BackgroundColor="White">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRoomTapped" CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid RowDefinitions="160,*">
+                                    <Grid Grid.Row="0">
+                                        <Image Source="{Binding ImagePath, Converter={StaticResource Base64ToImage}}" Aspect="AspectFill" HeightRequest="160"/>
+                                        <Frame CornerRadius="20" Padding="10,4" HorizontalOptions="End"
+                                               VerticalOptions="Start" Margin="0,8,8,0" HasShadow="False"
+                                               BackgroundColor="{Binding StatusColorHex}">
+                                            <Label Text="{Binding StatusText}" FontSize="12" TextColor="White"/>
+                                        </Frame>
+                                    </Grid>
+                                    <VerticalStackLayout Grid.Row="1" Padding="12,10" Spacing="2">
+                                        <Label Text="{Binding RoomDisplayName}" FontSize="15"
+                                               FontAttributes="Bold" TextColor="#111827"/>
+                                        <Label Text="{Binding CapacityText}" FontSize="13" TextColor="#6B7280"/>
+                                        <Label Text="{Binding PriceDisplayText}" FontSize="14"
+                                               FontAttributes="Bold" TextColor="#2563EB" Margin="0,4,0,0"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

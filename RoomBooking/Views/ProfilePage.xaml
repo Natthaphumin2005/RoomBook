@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoomBooking.Views.ProfilePage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F3F4F6">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Label Text="โปรไฟล์" FontSize="22" FontAttributes="Bold" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <Grid>
+
+                <!-- โหมดดูข้อมูล -->
+                <VerticalStackLayout x:Name="ViewLayout" Spacing="0" IsVisible="True"
+                                     Padding="20,24">
+
+                    <!-- Avatar -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,0,0,24">
+                        <Frame WidthRequest="90" HeightRequest="90" CornerRadius="45"
+                               Padding="0" HasShadow="False" BorderColor="#E5E7EB"
+                               HorizontalOptions="Center" IsClippedToBounds="True"
+                               BackgroundColor="White">
+                            <Image x:Name="imgAvatar" Aspect="AspectFill"
+                                   WidthRequest="90" HeightRequest="90"/>
+                        </Frame>
+
+                        <!-- ปุ่มเปลี่ยนรูป (ซ่อนสำหรับ Admin) -->
+                        <Label x:Name="lblChangePhoto" Text="เปลี่ยนรูป"
+                               TextColor="#2563EB" FontSize="13"
+                               HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnChangePhotoTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label x:Name="lblDisplayUsername" Text="กำลังโหลด..."
+                               HorizontalOptions="Center" FontAttributes="Bold"
+                               FontSize="18" TextColor="#111827"/>
+
+                        <!-- Role Badge (แสดงเฉพาะ Admin) -->
+                        <Frame x:Name="frmRoleBadge" CornerRadius="12" Padding="14,4"
+                               HasShadow="False" HorizontalOptions="Center"
+                               IsVisible="False">
+                            <Label x:Name="lblRole" FontSize="13"
+                                   FontAttributes="Bold" TextColor="White"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- ฟิลด์ข้อมูล -->
+                    <Label Text="อีเมล" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="White"
+                           Margin="0,0,0,16">
+                        <Entry x:Name="lblDisplayEmail" IsReadOnly="True"
+                               TextColor="#6B7280" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Label Text="เบอร์โทร" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="White"
+                           Margin="0,0,0,24">
+                        <Entry x:Name="lblDisplayPhone" IsReadOnly="True"
+                               TextColor="#6B7280" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <!-- ปุ่มแก้ไข (ซ่อนสำหรับ Admin) -->
+                    <Button x:Name="btnEditProfile" Text="แก้ไขโปรไฟล์"
+                            BackgroundColor="#2563EB" TextColor="White"
+                            CornerRadius="10" HeightRequest="50"
+                            Margin="0,0,0,12"
+                            Clicked="OnEditProfileClicked"/>
+
+                    <Button Text="ออกจากระบบ" BackgroundColor="#EF4444" TextColor="White"
+                            CornerRadius="10" HeightRequest="50"
+                            Clicked="OnLogoutClicked"/>
+
+                </VerticalStackLayout>
+
+                <!-- โหมดแก้ไข -->
+                <VerticalStackLayout x:Name="EditLayout" Spacing="0" IsVisible="False"
+                                     Padding="20,24">
+
+                    <!-- Avatar + เปลี่ยนรูป -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,0,0,24">
+                        <Frame WidthRequest="90" HeightRequest="90" CornerRadius="45"
+                               Padding="0" HasShadow="False" BorderColor="#E5E7EB"
+                               HorizontalOptions="Center" IsClippedToBounds="True"
+                               BackgroundColor="White">
+                            <Image x:Name="imgAvatarEdit" Aspect="AspectFill"
+                                   WidthRequest="90" HeightRequest="90"/>
+                        </Frame>
+                        <Label Text="เปลี่ยนรูป" TextColor="#2563EB" FontSize="13"
+                               HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnChangePhotoTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+
+                    <Label Text="ชื่อ-นามสกุล" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="White"
+                           Margin="0,0,0,16">
+                        <Entry x:Name="entName" TextColor="#111827" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Label Text="อีเมล" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="#F9FAFB"
+                           Margin="0,0,0,16">
+                        <Entry x:Name="entEmail" IsReadOnly="True"
+                               TextColor="#6B7280" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Label Text="เบอร์โทร" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="White"
+                           Margin="0,0,0,16">
+                        <Entry x:Name="entPhone" Keyboard="Telephone"
+                               TextColor="#111827" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Label Text="รหัสผ่านใหม่" FontAttributes="Bold" TextColor="#374151" Margin="0,0,0,6"/>
+                    <Frame BorderColor="#E5E7EB" HasShadow="False" CornerRadius="10"
+                           Padding="12,0" HeightRequest="50" BackgroundColor="White"
+                           Margin="0,0,0,24">
+                        <Entry x:Name="entPassword"
+                               Placeholder="เว้นว่างไว้ถ้าไม่ต้องการเปลี่ยน"
+                               IsPassword="True" TextColor="#111827" VerticalOptions="Center"/>
+                    </Frame>
+
+                    <Button Text="บันทึกการเปลี่ยนแปลง" BackgroundColor="#2563EB"
+                            TextColor="White" CornerRadius="10" HeightRequest="50"
+                            Margin="0,0,0,12"
+                            Clicked="OnSaveChangesClicked"/>
+
+                    <Button Text="ยกเลิก" BackgroundColor="#EF4444" TextColor="White"
+                            CornerRadius="10" HeightRequest="48" Clicked="OnCancelEditClicked"/>
+
+                </VerticalStackLayout>
+
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

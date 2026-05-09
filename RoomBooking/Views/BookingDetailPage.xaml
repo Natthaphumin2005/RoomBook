@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoomBooking.Views.BookingDetailPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FA">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="←" BackgroundColor="Transparent" TextColor="White"
+                    FontSize="30" FontAttributes="Bold" HorizontalOptions="Center"
+                    VerticalOptions="Center" WidthRequest="60" HeightRequest="60"
+                    Margin="0,0,0,7" Clicked="OnBackClicked"/>
+            <Label Grid.Column="1" Text="รายละเอียดการจอง" FontSize="20" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+
+                <Image x:Name="imgRoom" HeightRequest="220" Aspect="AspectFill"/>
+
+                <Grid Margin="16,-36,16,0">
+                    <Frame x:Name="frmStatus" CornerRadius="10" Padding="14,6"
+                           HasShadow="True" HorizontalOptions="Start">
+                        <Label x:Name="lblStatus" FontSize="14" FontAttributes="Bold" TextColor="White"/>
+                    </Frame>
+                </Grid>
+
+                <Frame Margin="16,12,16,0" CornerRadius="12" Padding="20"
+                       HasShadow="False" BorderColor="#E5E7EB" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="12">
+
+                        <Label x:Name="lblRoomName" FontSize="20" FontAttributes="Bold" TextColor="#111827"/>
+
+                        <BoxView HeightRequest="1" Color="#F3F4F6"/>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" WidthRequest="60">
+                                <Label Text="วันที่จอง" FontSize="12" TextColor="#9CA3AF"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" x:Name="lblDate" FontSize="15"
+                                   FontAttributes="Bold" TextColor="#111827"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" WidthRequest="60">
+                                <Label Text="เวลา" FontSize="12" TextColor="#9CA3AF"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" x:Name="lblTime" FontSize="15"
+                                   FontAttributes="Bold" TextColor="#111827"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" WidthRequest="60">
+                                <Label Text="ผู้จอง" FontSize="12" TextColor="#9CA3AF"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" x:Name="lblUser" FontSize="15"
+                                   FontAttributes="Bold" TextColor="#111827"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="#F3F4F6"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="ยอดชำระทั้งหมด" FontSize="15"
+                                   FontAttributes="Bold" TextColor="#111827" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" x:Name="lblTotal" FontSize="22"
+                                   FontAttributes="Bold" TextColor="#2563EB"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Grid x:Name="gridAdminActions" ColumnDefinitions="*,*" ColumnSpacing="12"
+                      Margin="16,12,16,20" IsVisible="False">
+                    <Button Text="ปฏิเสธ" BackgroundColor="#EF4444" TextColor="White"
+                            HeightRequest="50" CornerRadius="10" FontAttributes="Bold"
+                            Clicked="OnRejectClicked"/>
+                    <Button Grid.Column="1" Text="อนุมัติ" BackgroundColor="#10B981"
+                            TextColor="White" HeightRequest="50" CornerRadius="10"
+                            FontAttributes="Bold" Clicked="OnApproveClicked"/>
+                </Grid>
+
+                <Button x:Name="btnCancel" Text="ยกเลิกการจอง"
+                        BackgroundColor="#EF4444" TextColor="White"
+                        HeightRequest="50" CornerRadius="10" FontAttributes="Bold"
+                        Margin="16,12,16,20" IsVisible="False"
+                        Clicked="OnCancelBookingClicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:RoomBooking.Converters"
+             x:Class="RoomBooking.Views.BookingConfirmPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FA">
+
+    <ContentPage.Resources>
+        <conv:Base64ToImageConverter x:Key="Base64ToImage"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="←" BackgroundColor="Transparent" TextColor="White"
+                    FontSize="30" FontAttributes="Bold" HorizontalOptions="Center"
+                    VerticalOptions="Center" WidthRequest="60" HeightRequest="60"
+                    Margin="0,0,0,7" Clicked="OnBackClicked"/>
+            <Label Grid.Column="1" Text="ยืนยันการจอง" FontSize="20" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+
+                <Image x:Name="imgRoom" HeightRequest="180" Aspect="AspectFill"/>
+
+                <VerticalStackLayout Padding="20,16,20,20" Spacing="12">
+
+                    <Frame CornerRadius="12" Padding="20" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="สรุปการจอง" FontSize="17" FontAttributes="Bold"
+                                   TextColor="#111827" Margin="0,0,0,4"/>
+                            <BoxView HeightRequest="1" Color="#F3F4F6"/>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="ห้อง" FontSize="14" TextColor="#6B7280"/>
+                                <Label Grid.Column="1" x:Name="lblRoom" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827" HorizontalOptions="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="วันที่" FontSize="14" TextColor="#6B7280"/>
+                                <Label Grid.Column="1" x:Name="lblDate" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827" HorizontalOptions="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="เวลา" FontSize="14" TextColor="#6B7280"/>
+                                <Label Grid.Column="1" x:Name="lblTime" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827" HorizontalOptions="End"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="ผู้จอง" FontSize="14" TextColor="#6B7280"/>
+                                <Label Grid.Column="1" x:Name="lblUser" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827" HorizontalOptions="End"
+                                       LineBreakMode="TailTruncation"/>
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#F3F4F6"/>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Text="ยอดรวม" FontSize="16" FontAttributes="Bold" TextColor="#111827"/>
+                                <Label Grid.Column="1" x:Name="lblTotal" FontSize="18"
+                                       FontAttributes="Bold" TextColor="#2563EB" HorizontalOptions="End"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Button Text="ยืนยันและชำระเงิน" BackgroundColor="#2563EB" TextColor="White"
+                            FontSize="16" FontAttributes="Bold" CornerRadius="12"
+                            HeightRequest="54" Clicked="OnSubmitClicked"/>
+
+                    <Button Text="ยกเลิก" BackgroundColor="#EF4444" TextColor="White"
+                            FontSize="16" FontAttributes="Bold" CornerRadius="12"
+                            HeightRequest="54" Clicked="OnBackClicked"/>
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

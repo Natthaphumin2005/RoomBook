@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RoomBooking.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             Title="LoginPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="0.45*,0.55*">
+
+        <!-- ส่วนบนสีน้ำเงิน -->
+        <BoxView Grid.Row="0"
+                 BackgroundColor="#1A56DB"/>
+
+        <Label Grid.Row="0"
+               Text="Room Book"
+               FontSize="32"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <!-- ส่วนล่างสีเทาอ่อน -->
+        <BoxView Grid.Row="1"
+                 BackgroundColor="#F0F0F0"/>
+
+        <!-- Card Login ทับตรงกลาง -->
+        <Border Grid.Row="0"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 20"
+                Stroke="Transparent"
+                Margin="20,0"
+                Padding="24"
+                VerticalOptions="Center">
+
+            <VerticalStackLayout Spacing="12">
+
+                <!-- อีเมล -->
+                <Label Text="อีเมล"
+                       FontSize="15"
+                       FontAttributes="Bold"
+                       TextColor="#222"/>
+                <Border Stroke="#E0E0E0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        BackgroundColor="White">
+                    <Entry x:Name="entryEmail"
+                           Placeholder="กรอก Email"
+                           Keyboard="Email"
+                           FontSize="14"
+                           Margin="10,5"/>
+                </Border>
+
+                <!-- รหัสผ่าน -->
+                <Label Text="รหัสผ่าน"
+                       FontSize="15"
+                       FontAttributes="Bold"
+                       TextColor="#222"/>
+                <Border Stroke="#E0E0E0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        BackgroundColor="White">
+                    <Entry x:Name="entryPassword"
+                           Placeholder="กรอก Password"
+                           IsPassword="True"
+                           FontSize="14"
+                           Margin="10,5"/>
+                </Border>
+
+                <!-- แสดง Error -->
+                <Label x:Name="lblError"
+                       TextColor="Red"
+                       FontSize="13"
+                       IsVisible="False"
+                       HorizontalOptions="Center"/>
+
+                <!-- ปุ่มล็อกอิน -->
+                <Button x:Name="LoginButton"
+                        Text="ล็อกอิน"
+                        BackgroundColor="#1A56DB"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Margin="0,8,0,0"
+                        Clicked="btnLogin_Clicked"/>
+
+                <!-- ลิงก์ Sign Up -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="Don't have an account ?"
+                           FontSize="13"
+                           TextColor="Gray"/>
+                    <Label Text="Sign Up"
+                           FontSize="13"
+                           TextColor="#1A56DB"
+                           FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRegisterTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

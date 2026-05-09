@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:RoomBooking.Converters"
+             x:Class="RoomBooking.Views.AdminBookingPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F3F4F6">
+
+    <ContentPage.Resources>
+        <conv:Base64ToImageConverter x:Key="Base64ToImage"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Label Text="รายการจองห้อง" FontSize="22" FontAttributes="Bold" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Date Picker — ทำให้ดูเหมือนกดได้ -->
+        <Border Grid.Row="1" Margin="15,12,15,4" StrokeShape="RoundRectangle 10"
+                Stroke="#E2E8F0" BackgroundColor="White">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer/>
+            </Border.GestureRecognizers>
+            <Grid Padding="12,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="วันที่:" VerticalOptions="Center"
+                       FontAttributes="Bold" FontSize="15" TextColor="#111827"/>
+                <DatePicker Grid.Column="1" x:Name="datePicker" DateSelected="OnDateChanged"
+                            Format="dd/MM/yyyy" TextColor="#2563EB" FontAttributes="Bold"
+                            HorizontalOptions="End"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="15,4,15,4" ColumnSpacing="8">
+            <Button x:Name="btnTabList" Grid.Column="0" Text="รายการจอง"
+                    BackgroundColor="#2563EB" TextColor="White"
+                    CornerRadius="8" HeightRequest="40" FontSize="14"
+                    Clicked="OnTabListClicked"/>
+            <Button x:Name="btnTabTimeline" Grid.Column="1" Text="ตารางเวลา"
+                    BackgroundColor="White" TextColor="#2563EB"
+                    CornerRadius="8" HeightRequest="40" FontSize="14"
+                    BorderColor="#2563EB" BorderWidth="1"
+                    Clicked="OnTabTimelineClicked"/>
+        </Grid>
+
+        <RefreshView Grid.Row="3" x:Name="refreshView" Refreshing="OnRefreshing">
+            <CollectionView x:Name="collBookings">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center"
+                                         Spacing="8" Margin="0,60,0,0">
+                        <Label Text="ไม่มีรายการจองในวันนี้" FontSize="15"
+                               TextColor="#9CA3AF" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="15,6" Padding="0" CornerRadius="12"
+                               HasShadow="False" BorderColor="#E5E7EB" BackgroundColor="White"
+                               IsClippedToBounds="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBookingTapped" CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid RowDefinitions="Auto,Auto">
+                                <Grid Grid.Row="0" HeightRequest="140">
+                                    <Image Source="{Binding RoomImagePath, Converter={StaticResource Base64ToImage}}"
+                                           Aspect="AspectFill" HeightRequest="140"/>
+                                    <BoxView BackgroundColor="#40000000"/>
+                                    <Frame CornerRadius="8" Padding="10,4" HorizontalOptions="End"
+                                           VerticalOptions="Start" Margin="10"
+                                           BackgroundColor="{Binding StatusColor}" HasShadow="False">
+                                        <Label Text="{Binding StatusThai}" TextColor="White"
+                                               FontSize="12" FontAttributes="Bold"/>
+                                    </Frame>
+                                    <Label Text="{Binding RoomName}" FontSize="17"
+                                           FontAttributes="Bold" TextColor="White"
+                                           VerticalOptions="End" Margin="12,0,12,10"/>
+                                </Grid>
+                                <VerticalStackLayout Grid.Row="1" Padding="14,12" Spacing="5">
+                                    <Label Text="{Binding UserName, StringFormat='ผู้จอง: {0}'}"
+                                           TextColor="#4B5563" FontSize="13"/>
+                                    <Label Text="{Binding TimeRange, StringFormat='เวลา: {0}'}"
+                                           TextColor="#4B5563" FontSize="13"/>
+                                    <Label Text="{Binding BookingDate, StringFormat='วันที่: {0:dd/MM/yyyy}'}"
+                                           TextColor="#4B5563" FontSize="13"/>
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                                        <Label Text="{Binding TotalPrice, StringFormat='฿{0:N0}'}"
+                                               TextColor="#2563EB" FontAttributes="Bold" FontSize="15"/>
+                                        <Label Grid.Column="1" Text="ดูรายละเอียด ›"
+                                               TextColor="#9CA3AF" FontSize="13" VerticalOptions="Center"/>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,8,0,0"
+                                          IsVisible="{Binding IsPending}">
+                                        <Button Text="ปฏิเสธ" BackgroundColor="#FEE2E2"
+                                                TextColor="#EF4444" HeightRequest="44"
+                                                CornerRadius="8" FontAttributes="Bold"
+                                                Clicked="OnRejectClicked" CommandParameter="{Binding .}"/>
+                                        <Button Grid.Column="1" Text="อนุมัติ"
+                                                BackgroundColor="#10B981" TextColor="White"
+                                                HeightRequest="44" CornerRadius="8" FontAttributes="Bold"
+                                                Clicked="OnApproveClicked" CommandParameter="{Binding .}"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ScrollView Grid.Row="3" x:Name="scrollTimeline" IsVisible="False">
+            <VerticalStackLayout Padding="15" Spacing="12">
+                <ActivityIndicator x:Name="loadingTimeline" IsRunning="False"
+                                   IsVisible="False" Color="#2563EB" HorizontalOptions="Center"/>
+                <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView WidthRequest="14" HeightRequest="14" CornerRadius="3"
+                                 BackgroundColor="#DCFCE7" VerticalOptions="Center"/>
+                        <Label Text="ว่าง" FontSize="12" TextColor="#6B7280"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView WidthRequest="14" HeightRequest="14" CornerRadius="3"
+                                 BackgroundColor="#FEE2E2" VerticalOptions="Center"/>
+                        <Label Text="ไม่ว่าง" FontSize="12" TextColor="#6B7280"/>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+                <CollectionView x:Name="cvTimeline">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,4" Padding="12" CornerRadius="12"
+                                   HasShadow="False" BorderColor="#E5E7EB" BackgroundColor="White">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding RoomName}" FontSize="15"
+                                           FontAttributes="Bold" TextColor="#111827"/>
+                                    <CollectionView ItemsSource="{Binding Slots}">
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="4"
+                                                             HorizontalItemSpacing="6" VerticalItemSpacing="6"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame CornerRadius="6" Padding="4,6" HasShadow="False"
+                                                       BackgroundColor="{Binding BgColor}"
+                                                       BorderColor="{Binding BorderColor}">
+                                                    <VerticalStackLayout Spacing="1" HorizontalOptions="Center">
+                                                        <Label Text="{Binding TimeLabel}" FontSize="11"
+                                                               FontAttributes="Bold" TextColor="{Binding TextColor}"
+                                                               HorizontalOptions="Center"/>
+                                                        <Label Text="{Binding StatusLabel}" FontSize="9"
+                                                               TextColor="{Binding TextColor}"
+                                                               HorizontalOptions="Center"/>
+                                                    </VerticalStackLayout>
+                                                </Frame>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

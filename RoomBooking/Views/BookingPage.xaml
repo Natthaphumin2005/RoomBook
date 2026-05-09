@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:conv="clr-namespace:RoomBooking.Converters"
+             x:Class="RoomBooking.Views.BookingPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FA">
+
+    <ContentPage.Resources>
+        <conv:Base64ToImageConverter x:Key="Base64ToImage"/>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="#2563EB" HeightRequest="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="←" BackgroundColor="Transparent" TextColor="White"
+                    FontSize="30" FontAttributes="Bold" HorizontalOptions="Center"
+                    VerticalOptions="Center" WidthRequest="60" HeightRequest="60"
+                    Margin="0,0,0,7" Clicked="OnBackClicked"/>
+            <Label Grid.Column="1" Text="จองห้อง" FontSize="20" FontAttributes="Bold"
+                   TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16">
+
+                <Image x:Name="imgRoom" HeightRequest="200" Aspect="AspectFill"/>
+
+                <VerticalStackLayout Padding="20,0,20,20" Spacing="16">
+
+                    <!-- ข้อมูลห้อง -->
+                    <Frame CornerRadius="12" Padding="16" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="4">
+                            <Label x:Name="lblRoomName" FontSize="18" FontAttributes="Bold" TextColor="#111827"/>
+                            <Label x:Name="lblCapacity" FontSize="14" TextColor="#6B7280"/>
+                            <Label x:Name="lblPrice" FontSize="14" FontAttributes="Bold" TextColor="#2563EB"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- เลือกวันที่ -->
+                    <Label Text="เลือกวันที่จอง" FontSize="15" FontAttributes="Bold" TextColor="#111827"/>
+                    <Frame CornerRadius="10" Padding="12,4" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <DatePicker x:Name="datePicker"
+                                    MinimumDate="{x:Static sys:DateTime.Today}"
+                                    Format="dd/MM/yyyy" TextColor="#111827"
+                                    DateSelected="OnDateSelected"/>
+                    </Frame>
+
+                    <!-- ตารางเวลา -->
+                    <Frame CornerRadius="12" Padding="16" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="ตารางเวลา" FontSize="15"
+                                       FontAttributes="Bold" TextColor="#111827"/>
+                                <ActivityIndicator Grid.Column="1" x:Name="loadingSlots"
+                                                   IsRunning="False" IsVisible="False"
+                                                   Color="#2563EB" WidthRequest="20" HeightRequest="20"/>
+                            </Grid>
+
+                            <!-- Legend -->
+                            <HorizontalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="6">
+                                    <BoxView WidthRequest="14" HeightRequest="14"
+                                             CornerRadius="3" BackgroundColor="#DCFCE7"
+                                             VerticalOptions="Center"/>
+                                    <Label Text="ว่าง" FontSize="12" TextColor="#6B7280"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="6">
+                                    <BoxView WidthRequest="14" HeightRequest="14"
+                                             CornerRadius="3" BackgroundColor="#FEE2E2"
+                                             VerticalOptions="Center"/>
+                                    <Label Text="ไม่ว่าง" FontSize="12" TextColor="#6B7280"/>
+                                </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <!-- Time Slots Grid -->
+                            <CollectionView x:Name="cvTimeSlots">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="8" VerticalItemSpacing="8"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame CornerRadius="8" Padding="6,8" HasShadow="False"
+                                               BackgroundColor="{Binding BgColor}"
+                                               BorderColor="{Binding BorderColor}">
+                                            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                                <Label Text="{Binding TimeLabel}" FontSize="13"
+                                                       FontAttributes="Bold" TextColor="{Binding TextColor}"
+                                                       HorizontalOptions="Center"/>
+                                                <Label Text="{Binding StatusLabel}" FontSize="10"
+                                                       TextColor="{Binding TextColor}"
+                                                       HorizontalOptions="Center"/>
+                                            </VerticalStackLayout>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- เลือกเวลาเริ่ม -->
+                    <Label Text="เวลาเริ่มต้น" FontSize="15" FontAttributes="Bold" TextColor="#111827"/>
+                    <Frame CornerRadius="10" Padding="12,4" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <TimePicker x:Name="timeStart" Format="HH:mm" TextColor="#111827"
+                                    PropertyChanged="OnTimeChanged"/>
+                    </Frame>
+
+                    <!-- เลือกเวลาสิ้นสุด -->
+                    <Label Text="เวลาสิ้นสุด" FontSize="15" FontAttributes="Bold" TextColor="#111827"/>
+                    <Frame CornerRadius="10" Padding="12,4" HasShadow="False"
+                           BorderColor="#E5E7EB" BackgroundColor="White">
+                        <TimePicker x:Name="timeEnd" Format="HH:mm" TextColor="#111827"
+                                    PropertyChanged="OnTimeChanged"/>
+                    </Frame>
+
+                    <!-- สรุปราคา -->
+                    <Frame CornerRadius="12" Padding="16" HasShadow="False"
+                           BorderColor="#DBEAFE" BackgroundColor="#EFF6FF">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="สรุปค่าใช้จ่าย" FontSize="15" FontAttributes="Bold" TextColor="#1E40AF"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="ค่าห้อง" FontSize="14" TextColor="#374151"/>
+                                <Label Grid.Column="1" x:Name="lblRoomCost" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="ค่าประกัน" FontSize="14" TextColor="#374151"/>
+                                <Label Grid.Column="1" x:Name="lblInsurance" FontSize="14"
+                                       FontAttributes="Bold" TextColor="#111827"/>
+                            </Grid>
+                            <BoxView HeightRequest="1" Color="#BFDBFE" Margin="0,4"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="รวมทั้งหมด" FontSize="16" FontAttributes="Bold" TextColor="#1E40AF"/>
+                                <Label Grid.Column="1" x:Name="lblTotal" FontSize="18"
+                                       FontAttributes="Bold" TextColor="#2563EB"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Label x:Name="lblError" TextColor="#EF4444" FontSize="13"
+                           IsVisible="False" HorizontalOptions="Center"/>
+
+                    <Button Text="ยืนยันการจอง" BackgroundColor="#2563EB" TextColor="White"
+                            FontSize="16" FontAttributes="Bold" CornerRadius="12"
+                            HeightRequest="54" Margin="0,4,0,20"
+                            Clicked="OnConfirmClicked"/>
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
