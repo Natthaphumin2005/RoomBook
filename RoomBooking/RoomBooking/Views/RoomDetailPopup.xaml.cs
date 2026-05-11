@@ -20,6 +20,12 @@ namespace RoomBooking.Views
             BindingContext = _currentRoom;
         }
 
+        // แตะพื้นหลังเพื่อปิด Popup
+        private async void OnBackgroundTapped(object sender, TappedEventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
+
         // กดปุ่มปิด Popup
         private async void OnCloseTapped(object sender, EventArgs e)
         {
